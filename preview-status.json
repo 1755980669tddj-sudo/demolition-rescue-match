@@ -1,0 +1,33 @@
+{
+  "commit": "c93a583aae1b7e69416de34c347e97f3a447695e",
+  "expected_sha256": "7707092282f9ec52b7ea9129ad6cbdbfb26c25b76a110ffd8512cd3b0bccf6a9",
+  "game_sha256": "ff682a88d84b39ae7a6fb03fe6f2ded8cb371280f813d897fc02887fadebab48",
+  "verified_at": "2026-10-29T13:08:12.164627+00:00",
+  "results": [
+    {
+      "url": "https://rawcdn.githack.com/1755980669tddj-sudo/demolition-rescue-match/c93a583aae1b7e69416de34c347e97f3a447695e/play.xhtml",
+      "http_status": 200,
+      "content_type": "application/xhtml+xml; charset=utf-8",
+      "content_disposition": "",
+      "content_security_policy": "",
+      "bytes": 651,
+      "hash_matches": true
+    },
+    {
+      "url": "https://raw.githack.com/1755980669tddj-sudo/demolition-rescue-match/c93a583aae1b7e69416de34c347e97f3a447695e/play.xhtml",
+      "http_status": 200,
+      "content_type": "application/xhtml+xml; charset=utf-8",
+      "content_disposition": "",
+      "content_security_policy": "",
+      "bytes": 651,
+      "hash_matches": true
+    }
+  ],
+  "mobile_test": {
+    "passed": true,
+    "url": "https://rawcdn.githack.com/1755980669tddj-sudo/demolition-rescue-match/c93a583aae1b7e69416de34c347e97f3a447695e/play.xhtml",
+    "viewport": "390x844",
+    "real_touch_swaps": 11,
+    "runtime_errors": []
+  }
+}
