@@ -1,0 +1,26 @@
+name: Verify public browser preview
+on:
+  push:
+    branches: [browser-preview]
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify public standalone game
+        env:
+          PREVIEW_COMMIT: ${{ github.sha }}
+          PREVIEW_REPOSITORY: ${{ github.repository }}
+        run: python3 .github/scripts/verify-preview.py
+      - name: Publish verification result
+        run: |
+          cp preview-status.json /tmp/preview-status.json
+          git checkout --orphan preview-status
+          git rm -rf .
+          cp /tmp/preview-status.json preview-status.json
+          git add preview-status.json
+          git -c user.name='Rescue Preview Check' -c user.email='preview-check@users.noreply.github.com' commit -m 'Record public browser preview verification'
+          git push origin HEAD:refs/heads/preview-status --force
