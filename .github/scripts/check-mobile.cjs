@@ -14,7 +14,7 @@ const file='preview-status.json',status=JSON.parse(fs.readFileSync(file,'utf8'))
   p.on('console',msg=>{if(msg.type()==='error')consoleErrors.push(msg.text().slice(0,700));});
   p.on('requestfailed',r=>failedRequests.push({url:r.url().slice(0,150),error:r.failure()?.errorText}));
   const response=await p.goto(result.url,{waitUntil:'domcontentloaded',timeout:120000});assert.equal(response.status(),200);
-  const frame=await p.locator('#rescue-game').elementHandle(),game=await frame.contentFrame();assert(game);
+  const game=p.frames().find(f=>f.url().endsWith('/index.html'))||await p.waitForEvent('framenavigated',{predicate:f=>f.url().endsWith('/index.html'),timeout:60000});
   await game.getByRole('button',{name:'开始救援，进入选关',exact:true}).tap();
   assert.equal(await game.locator('.level-card').count(),25);
   await game.getByRole('button',{name:'开始救援',exact:true}).tap();
