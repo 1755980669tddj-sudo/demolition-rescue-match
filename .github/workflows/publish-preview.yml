@@ -15,7 +15,12 @@ jobs:
           PREVIEW_COMMIT: ${{ github.sha }}
           PREVIEW_REPOSITORY: ${{ github.repository }}
         run: python3 .github/scripts/verify-preview.py
+      - name: Open game in clean mobile browser
+        run: |
+          npm install --prefix /tmp/preview-browser --no-audit --no-fund playwright@1.62.1
+          node .github/scripts/check-mobile.cjs
       - name: Publish verification result
+        if: always()
         run: |
           cp preview-status.json /tmp/preview-status.json
           git checkout --orphan preview-status

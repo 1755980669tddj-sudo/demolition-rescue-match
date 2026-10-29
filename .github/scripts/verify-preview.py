@@ -22,6 +22,8 @@ def check(url):
             data = response.read()
             return {'url': url, 'http_status': response.status,
                     'content_type': response.headers.get('Content-Type', ''),
+                    'content_disposition': response.headers.get('Content-Disposition', ''),
+                    'content_security_policy': response.headers.get('Content-Security-Policy', ''),
                     'bytes': len(data), 'hash_matches': hashlib.sha256(data).hexdigest() == expected}
     except Exception as error:
         return {'url': url, 'error': str(error)[:300], 'hash_matches': False}
