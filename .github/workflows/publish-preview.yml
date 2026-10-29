@@ -23,9 +23,11 @@ jobs:
         if: always()
         run: |
           cp preview-status.json /tmp/preview-status.json
+          if [ -f preview-debug.png ]; then cp preview-debug.png /tmp/preview-debug.png; fi
           git checkout --orphan preview-status
           git rm -rf .
           cp /tmp/preview-status.json preview-status.json
+          if [ -f /tmp/preview-debug.png ]; then cp /tmp/preview-debug.png preview-debug.png; git add preview-debug.png; fi
           git add preview-status.json
           git -c user.name='Rescue Preview Check' -c user.email='preview-check@users.noreply.github.com' commit -m 'Record public browser preview verification'
           git push origin HEAD:refs/heads/preview-status --force
