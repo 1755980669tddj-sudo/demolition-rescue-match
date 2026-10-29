@@ -11,9 +11,9 @@ from pathlib import Path
 
 commit = os.environ['PREVIEW_COMMIT']
 repository = os.environ['PREVIEW_REPOSITORY']
-expected = hashlib.sha256(Path('index.html').read_bytes()).hexdigest()
-urls = [f'https://rawcdn.githack.com/{repository}/{commit}/index.html',
-        f'https://raw.githack.com/{repository}/{commit}/index.html']
+expected = hashlib.sha256(Path('play.xhtml').read_bytes()).hexdigest()
+urls = [f'https://rawcdn.githack.com/{repository}/{commit}/play.xhtml',
+        f'https://raw.githack.com/{repository}/{commit}/play.xhtml']
 
 def check(url):
     try:
@@ -32,11 +32,12 @@ results = []
 for attempt in range(4):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         results = list(executor.map(check, urls))
-    if any(r.get('http_status') == 200 and r['hash_matches'] and 'text/html' in r.get('content_type', '') for r in results):
+    if any(r.get('http_status') == 200 and r['hash_matches'] and 'html' in r.get('content_type', '') for r in results):
         break
     time.sleep(10)
 
 payload = {'commit': commit, 'expected_sha256': expected,
+           'game_sha256': hashlib.sha256(Path('index.html').read_bytes()).hexdigest(),
            'verified_at': datetime.datetime.now(datetime.timezone.utc).isoformat(),
            'results': results}
 Path('preview-status.json').write_text(json.dumps(payload, indent=2) + '\n')
